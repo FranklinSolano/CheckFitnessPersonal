@@ -24,6 +24,7 @@ class LoginScreen: UIView {
 
     lazy var loginTextField: UITextField = {
         let textfield = CustomTextField(placeholder: "Digite seu email", image: UIImage(systemName: "person")!)
+        textfield.configureTextField(isSecure: false, keyboardType: .emailAddress, autocapitalization: .none, placeholderColor: .darkGray)
         return textfield
     }()
     
@@ -35,6 +36,7 @@ class LoginScreen: UIView {
     
     lazy var passwordTextField: UITextField = {
         let textfield = CustomTextField(placeholder: "Digite sua senha", image: UIImage(systemName: "lock")!)
+        textfield.configureTextField(isSecure: true, keyboardType: .default, autocapitalization: .none, placeholderColor: .darkGray)
         return textfield
     }()
     
@@ -109,12 +111,10 @@ class LoginScreen: UIView {
             loginButton.topAnchor.constraint(equalTo: forgotPasswordButton.bottomAnchor,constant: 70),
             loginButton.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 30),
             loginButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-            loginButton.heightAnchor.constraint(equalToConstant: 60),
+            loginButton.heightAnchor.constraint(equalToConstant: 50),
             
             registerButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             registerButton.centerXAnchor.constraint(equalTo: centerXAnchor)
-        
         ])
     }
-    
 }
