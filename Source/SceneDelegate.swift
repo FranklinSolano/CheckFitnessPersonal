@@ -8,19 +8,39 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
+    var loginCoordinator: LoginCoordinating? // Referência forte ao Coordinator
 
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        // Cria a janela principal
+        let window = UIWindow(windowScene: windowScene)
+        
+        // Cria o UINavigationController
+        let navigationController = UINavigationController()
+        
+        // Cria o LoginViewController e o LoginCoordinator usando a LoginFactory
+        let loginFactory = LoginFactory()
+        let (loginVC, coordinator) = loginFactory.make(navigationController: navigationController)
+        
+        // Mantém uma referência forte ao Coordinator
+        self.loginCoordinator = coordinator
+        
+        // Define o LoginViewController como root do UINavigationController
+        navigationController.viewControllers = [loginVC]
+        
+        // Define o UINavigationController como rootViewController da janela
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
+        self.window = window
+    }
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-          guard let windowScene = (scene as? UIWindowScene) else { return }
-          let window = UIWindow(windowScene: windowScene)
-          let vc: LoginViewController = LoginViewController()
-          let navVC = UINavigationController(rootViewController: vc)
-          window.rootViewController = navVC
-          window.makeKeyAndVisible()
-          self.window = window
-      }
+    // Outros métodos padrão do SceneDelegate podem permanecer como estão
+}
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
@@ -54,5 +74,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
 
-}
 
