@@ -19,7 +19,9 @@ class LoginFactory {
         let service = LoginService()
         let interactor = LoginInteractor(presenter: presenter, service: service)
         
-        return ( loginVC, coordinator)
+        loginVC.interactor = interactor
+        
+        return (loginVC, coordinator)
         
     }
     

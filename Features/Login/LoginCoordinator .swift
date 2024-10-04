@@ -21,11 +21,11 @@ class LoginCoordinator: LoginCoordinating {
     
     
     func navigateToRegister() {
-//        guard let navigationController else { return }
-       
-//        let registerFactory = RegisterFactory()
-//        let registerVC = registerFactory.make(navigationController: navigationController)
-//        navigationController.pushViewController(registerVC, animated: true)
+        guard let navigationController else { return }
+        print("Quarto Fluxo: LoginCoordinator")
+        let registerFactory = RegisterFactory()
+        let registerVC = registerFactory.make(navegationController: navigationController)
+        navigationController.pushViewController(registerVC, animated: true)
     }
     
     func navigationToForgotPassword() {

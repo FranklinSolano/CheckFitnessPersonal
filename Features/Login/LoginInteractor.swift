@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol LoginInteracting: AnyObject {
-    func login(username: String, password: String)
+    func callService(username: String, password: String)
     func navigateToRegister()
     func navigateToForgotPassword()
 }
@@ -20,23 +20,28 @@ class LoginInteractor: LoginInteracting {
     weak var presenter: LoginPresenting?
     var service: LoginServicing?
     
-    init(presenter: LoginPresenter, service: LoginService) {
+    init(presenter: LoginPresenting, service: LoginServicing) {
         self.presenter = presenter
         self.service = service
     }
     
     
-    func login(username: String, password: String) {
+    func callService(username: String, password: String) {
         service?.submitLogin(username: username, password: password, completion: { [weak self] success in
-            self?.presenter?.presentLoginResult(success: success)
+            DispatchQueue.main.async {
+                print("Segundo Fluxo: LoginInteractor") // Debugging
+                self?.presenter?.presentLoginResult(success: success)
+            }
         })
     }
     
     func navigateToRegister() {
+        print("Segundo Fluxo: LoginInteractor") // Debugging
         presenter?.presentNavigationToRegister()
     }
     
     func navigateToForgotPassword() {
+        print("Segundo Fluxo: LoginInteractor") // Debugging
         presenter?.presentNavigationToForgotPassword()
     }
 

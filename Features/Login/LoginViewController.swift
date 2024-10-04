@@ -47,24 +47,33 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
     
     lazy var forgotPasswordButton: UIButton = {
         let button = CustomButton(title: "Esqueceu a senha ?", fontSize: 14)
+        button.addTarget(self, action: #selector(forgotPasswordTapped), for: .touchUpInside)
         return button
     }()
     
     lazy var loginButton: UIButton = {
         let button = CustomButton(title: "Entrar")
+        button.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)
         return button
     }()
     
     lazy var registerButton: UIButton = {
         let button = CustomButton(title: "Personal Trainer ? Cadastre-se", fontSize: 16)
+        button.addTarget(self, action: #selector(registerTapped), for: .touchUpInside)
         return button
     }()
     
-    var interactor: LoginInteractor?
+    var interactor: LoginInteracting?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configSetup()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Esconde a Navigation Bar
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     private func configSetup(){
@@ -87,7 +96,7 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
     private func configConstraints(){
         NSLayoutConstraint.activate([
             
-            logoCheckFitnee.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            logoCheckFitnee.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 45),
             logoCheckFitnee.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logoCheckFitnee.heightAnchor.constraint(equalToConstant: 80),
             logoCheckFitnee.widthAnchor.constraint(equalToConstant: 80),
@@ -122,17 +131,25 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
     }
     
     @objc private func loginTapped() {
+        print("Primeiro Fluxo: LoginViewController")
+
         guard let username = loginTextField.text,
               let password = passwordTextField.text else { return }
         
-        interactor?.login(username: username, password: password)
+        interactor?.callService(username: username, password: password)
+        
+        
     }
     
     @objc private func forgotPasswordTapped() {
+        print("Primeiro Fluxo: LoginViewController")
+
         interactor?.navigateToForgotPassword()
     }
     
     @objc private func registerTapped() {
+        print("Primeiro Fluxo: LoginViewController")
+
         interactor?.navigateToRegister()
     }
     

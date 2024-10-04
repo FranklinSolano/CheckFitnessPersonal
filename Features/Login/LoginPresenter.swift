@@ -17,9 +17,9 @@ protocol LoginPresenting: AnyObject {
 class LoginPresenter: LoginPresenting {
     
     weak var view: LoginViewControllerDisplay?
-    var coordinator: LoginCoordinator?
+    var coordinator: LoginCoordinating?
     
-    init(view: LoginViewControllerDisplay, coordinator: LoginCoordinator) {
+    init(view: LoginViewControllerDisplay, coordinator: LoginCoordinating?) {
         self.view = view
         self.coordinator = coordinator
     }
@@ -27,16 +27,24 @@ class LoginPresenter: LoginPresenting {
     func presentLoginResult(success: Bool) {
         if success {
             view?.showAlert(title: "Deu certo", message: "Usuario logado com sucesso")
+            print("Terceiro Fluxo: LoginPresenter")
+
         } else {
             view?.showAlert(title: "Deu ruim", message: "Usuario não logado")
+            print("Terceiro Fluxo: LoginPresenter")
+
         }
     }
     
     func presentNavigationToRegister() {
+        print("Terceiro Fluxo: LoginPresenter")
+
         coordinator?.navigateToRegister()
     }
     
     func presentNavigationToForgotPassword() {
+        print("Terceiro Fluxo: LoginPresenter")
+
         coordinator?.navigationToForgotPassword()
     }
     
