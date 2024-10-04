@@ -28,27 +28,27 @@ class RegisterViewController: UIViewController, RegisterViewControllerDisplay {
     
     lazy var nameTextField: UITextField = {
         let textField = CustomTextField(placeholder: "Nome Completo", image: UIImage(systemName: "person")!)
-        textField.configureTextField(isSecure: false, keyboardType: .default, autocapitalization: .none, placeholderColor: .darkGray)
+        textField.configureTextField(delegate: self, isSecure: false, keyboardType: .default, autocapitalization: .none, placeholderColor: .darkGray)
         return textField
     }()
     
     lazy var emailTextField: UITextField = {
         let textField = CustomTextField(placeholder: "Email", image: UIImage(systemName: "envelope")!)
-        textField.configureTextField(isSecure: false, keyboardType: .emailAddress, autocapitalization: .none, placeholderColor: .darkGray)
+        textField.configureTextField(delegate: self, isSecure: false, keyboardType: .emailAddress, autocapitalization: .none, placeholderColor: .darkGray)
         return textField
     }()
     
     
     lazy var passwordTextField: UITextField = {
         let textField = CustomTextField(placeholder: "Senha", image: UIImage(systemName: "lock")!)
-        textField.configureTextField(isSecure: true, keyboardType: .default, autocapitalization: .none, placeholderColor: .darkGray)
+        textField.configureTextField(delegate: self, isSecure: true, keyboardType: .default, autocapitalization: .none, placeholderColor: .darkGray)
         return textField
     }()
     
     
     lazy var confirmedPasswordTextField: UITextField = {
         let textField = CustomTextField(placeholder: "Confirmar Senha", image: UIImage(systemName: "lock")!)
-        textField.configureTextField(isSecure: true, keyboardType: .default, autocapitalization: .none, placeholderColor: .darkGray)
+        textField.configureTextField(delegate: self, isSecure: true, keyboardType: .default, autocapitalization: .none, placeholderColor: .darkGray)
         return textField
     }()
     
@@ -147,5 +147,11 @@ class RegisterViewController: UIViewController, RegisterViewControllerDisplay {
         self.present(alert, animated: true, completion: nil)
     }
     
-    
+}
+
+extension RegisterViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }

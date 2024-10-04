@@ -30,11 +30,11 @@ class LoginCoordinator: LoginCoordinating {
     
     func navigationToForgotPassword() {
         
-//        guard let navigationController else { return }
-//       
-//        let forgotPasswordFactory = ForgotPasswordFactory()
-//        let forgotPasswordVC = forgotPasswordFactory.make(navigationController: navigationController)
-//        navigationController.pushViewController(registerVC, animated: true)
+        guard let navigationController else { return }
+       
+        let forgotPasswordFactory = ForgotPasswordFactory()
+        let forgotPasswordVC = forgotPasswordFactory.make(navegationController: navigationController)
+        navigationController.pushViewController(forgotPasswordVC, animated: true)
     }
     
 }

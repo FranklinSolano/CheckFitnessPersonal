@@ -13,7 +13,16 @@ protocol LoginViewControllerDisplay: AnyObject {
     
 }
 
-class LoginViewController: UIViewController, LoginViewControllerDisplay {
+class LoginViewController: UIViewController, LoginViewControllerDisplay, TextFieldConfigurable {
+    
+    
+    func configureTextField() {
+        loginTextField.configureTextField(delegate: self, isSecure: false, keyboardType: .emailAddress, autocapitalization: .none, placeholderColor: .darkGray)
+        passwordTextField.configureTextField(delegate: self, isSecure: true, keyboardType: .default, autocapitalization: .none, placeholderColor: .darkGray)
+    }
+    
+
+    
     
     lazy var logoCheckFitnee: UIView = {
         let view = CustomLogo()
@@ -29,7 +38,7 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
     
     lazy var loginTextField: UITextField = {
         let textfield = CustomTextField(placeholder: "Digite seu email", image: UIImage(systemName: "person")!)
-        textfield.configureTextField(isSecure: false, keyboardType: .emailAddress, autocapitalization: .none, placeholderColor: .darkGray)
+//        textfield.configureTextField(delegate: self, isSecure: false, keyboardType: .emailAddress, autocapitalization: .none, placeholderColor: .darkGray)
         return textfield
     }()
     
@@ -41,7 +50,7 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
     
     lazy var passwordTextField: UITextField = {
         let textfield = CustomTextField(placeholder: "Digite sua senha", image: UIImage(systemName: "lock")!)
-        textfield.configureTextField(isSecure: true, keyboardType: .default, autocapitalization: .none, placeholderColor: .darkGray)
+//        textfield.configureTextField(delegate: self, isSecure: true, keyboardType: .default, autocapitalization: .none, placeholderColor: .darkGray)
         return textfield
     }()
     
@@ -77,9 +86,11 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
     }
     
     private func configSetup(){
+        
         view.backgroundColor = DesignerSystem.Colors.primaryColor
         configElements()
         configConstraints()
+        configureTextField()
     }
     
     private func configElements(){
@@ -144,8 +155,7 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
     @objc private func forgotPasswordTapped() {
         print("Primeiro Fluxo: LoginViewController")
 
-        interactor?.navigateToForgotPassword()
-    }
+        interactor?.navigateToForgotPassword()    }
     
     @objc private func registerTapped() {
         print("Primeiro Fluxo: LoginViewController")
