@@ -5,8 +5,8 @@
 //  Created by Franklin  Stilhano Solano on 19/09/24.
 //
 
-import UIKit
 import Modulo_DesignerSystem
+import SnapKit
 
 protocol LoginViewControllerDisplay: AnyObject {
     func showAlert(title:String, message:String)
