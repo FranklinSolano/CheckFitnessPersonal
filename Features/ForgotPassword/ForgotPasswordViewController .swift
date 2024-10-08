@@ -5,9 +5,8 @@
 //  Created by Franklin  Stilhano Solano on 03/10/24.
 //
 
-import UIKit
 import Modulo_DesignerSystem
-
+import SnapKit
 
 protocol ForgotPasswordViewControllerDisplay: AnyObject {
     func showAlert(title: String, message: String)
@@ -18,7 +17,7 @@ class ForgotPasswordViewController: UIViewController, ForgotPasswordViewControll
 
     
     
-    lazy var BackButton: UIButton = {
+    lazy var backButton: UIButton = {
         let button = CustomButton(title: "Voltar", fontSize: 14)
         button.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
         return button
@@ -63,37 +62,59 @@ class ForgotPasswordViewController: UIViewController, ForgotPasswordViewControll
     }
     
     private func configElement() {
-        view.addSubview(BackButton)
+        view.addSubview(backButton)
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
         view.addSubview(emailTextField)
         view.addSubview(enterButton)
     }
-    
+
     private func configConstraints() {
-        NSLayoutConstraint.activate([
-            
-            BackButton.topAnchor.constraint(equalTo: view.topAnchor,constant: 50),
-            BackButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            
-            titleLabel.topAnchor.constraint(equalTo: BackButton.bottomAnchor, constant: 120),
-            titleLabel.leadingAnchor.constraint(equalTo: BackButton.leadingAnchor),
-            
-            
-            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
-            subtitleLabel.leadingAnchor.constraint(equalTo: BackButton.leadingAnchor),
-            subtitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -20),
-            
-            emailTextField.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor,constant: 40),
-            emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            emailTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
-            emailTextField.heightAnchor.constraint(equalToConstant: 50),
-            
-            enterButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -40),
-            enterButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 30),
-            enterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            enterButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
+        configBackButtonConstraints()
+        configTitleLabelConstraints()
+        configSubTitleConstraints()
+        configEmailTextFieldConstraints()
+        configForgotPasswordConstraints()
+    }
+    
+    private func configBackButtonConstraints(){
+        backButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.equalToSuperview().offset(25)
+        }
+    }
+    
+    private func configTitleLabelConstraints(){
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(120)
+            make.leading.equalTo(backButton.snp.leading)
+        }
+    }
+    
+    private func configSubTitleConstraints(){
+        subtitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(15)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().inset(20)
+        }
+    }
+    
+    private func configEmailTextFieldConstraints(){
+        emailTextField.snp.makeConstraints { make in
+            make.top.equalTo(subtitleLabel.snp.bottom).offset(40)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(50)
+        }
+    }
+    
+    private func configForgotPasswordConstraints(){
+        enterButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(40)
+            make.leading.equalToSuperview().offset(35)
+            make.trailing.equalToSuperview().inset(35)
+            make.height.equalTo(50)
+        }
     }
     
     @objc private func backTapped() {
@@ -107,7 +128,6 @@ class ForgotPasswordViewController: UIViewController, ForgotPasswordViewControll
         interactor?.callService(email: email)
     }
     
-    
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title,
                                       message: message,
@@ -118,4 +138,3 @@ class ForgotPasswordViewController: UIViewController, ForgotPasswordViewControll
         self.present(alert, animated: true, completion: nil)
     }
 }
-

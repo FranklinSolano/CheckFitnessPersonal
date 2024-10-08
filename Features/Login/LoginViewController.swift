@@ -202,33 +202,4 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay, UITextF
                                       handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-    
-    
-    
-}
-
-
-import SwiftUI
-
-// Preview para visualizar o LoginViewController
-struct PreviewController_Previews: PreviewProvider {
-    static var previews: some View {
-        PreviewViewControllerRepresentable()
-            .edgesIgnoringSafeArea(.all)
-    }
-}
-
-// UIViewControllerRepresentable para integrar UIKit ao SwiftUI
-struct PreviewViewControllerRepresentable: UIViewControllerRepresentable {
-    
-    func makeUIViewController(context: Context) -> UINavigationController {
-        // Cria o LoginViewController e o coloca dentro de um UINavigationController
-        let previewVC = LoginViewController()
-        let navigationController = UINavigationController(rootViewController: previewVC)
-        return navigationController
-    }
-    
-    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
-        // Atualizações podem ser feitas aqui, mas pode ser deixado vazio
-    }
 }
