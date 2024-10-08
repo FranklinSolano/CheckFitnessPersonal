@@ -28,7 +28,7 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay, UITextF
         return label
     }()
     
-    lazy var loginTextField: UITextField = {
+    lazy var emailTextField: UITextField = {
         let textfield = CustomTextField(placeholder: "Digite seu email", image: UIImage(systemName: "person")!)
         textfield.configureTextField(delegate: self, isSecure: false, keyboardType: .emailAddress, autocapitalization: .none, placeholderColor: .darkGray)
         return textfield
@@ -88,7 +88,7 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay, UITextF
     private func configElements(){
         view.addSubview(logoCheckFitnee)
         view.addSubview(loginLabel)
-        view.addSubview(loginTextField)
+        view.addSubview(emailTextField)
         view.addSubview(passwordLabel)
         view.addSubview(passwordTextField)
         view.addSubview(forgotPasswordButton)
@@ -97,51 +97,88 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay, UITextF
     }
     
     private func configConstraints(){
-        NSLayoutConstraint.activate([
-            
-            logoCheckFitnee.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 45),
-            logoCheckFitnee.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoCheckFitnee.heightAnchor.constraint(equalToConstant: 80),
-            logoCheckFitnee.widthAnchor.constraint(equalToConstant: 80),
-            
-            loginLabel.topAnchor.constraint(equalTo: logoCheckFitnee.bottomAnchor,constant: 70),
-            loginLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 25),
-            
-            loginTextField.topAnchor.constraint(equalTo: loginLabel.bottomAnchor, constant: 15),
-            loginTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20),
-            loginTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            loginTextField.heightAnchor.constraint(equalToConstant: 50),
-            
-            passwordLabel.topAnchor.constraint(equalTo: loginTextField.bottomAnchor,constant: 15),
-            passwordLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-            
-            passwordTextField.topAnchor.constraint(equalTo: passwordLabel.bottomAnchor, constant: 15),
-            passwordTextField.leadingAnchor.constraint(equalTo: loginTextField.leadingAnchor),
-            passwordTextField.trailingAnchor.constraint(equalTo: loginTextField.trailingAnchor),
-            passwordTextField.heightAnchor.constraint(equalToConstant: 50),
-            
-            forgotPasswordButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor,constant: 15),
-            forgotPasswordButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -40),
-            
-            loginButton.topAnchor.constraint(equalTo: forgotPasswordButton.bottomAnchor,constant: 70),
-            loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 30),
-            loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            loginButton.heightAnchor.constraint(equalToConstant: 50),
-            
-            registerButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
+        configLogoImageConstraints()
+        configLoginLabelConstraints()
+        configEmailTextFieldConstraints()
+        configPasswordLabelConstraints()
+        configPasswordTextFieldConstraints()
+        configForgotPasswordButtonConstraints()
+        configLoginButtonConstraints()
+        configRegisterButtonConstraints()
     }
+    
+    private func configLogoImageConstraints(){
+        logoCheckFitnee.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(45)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(80)
+            make.width.equalTo(80)
+        }
+    }
+    
+    private func configLoginLabelConstraints(){
+        loginLabel.snp.makeConstraints { make in
+            make.top.equalTo(logoCheckFitnee.snp.bottom).offset(70)
+            make.leading.equalToSuperview().offset(25)
+        }
+    }
+    
+    private func configEmailTextFieldConstraints(){
+        emailTextField.snp.makeConstraints { make in
+            make.top.equalTo(loginLabel.snp.bottom).offset(15)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(50)
+        }
+    }
+    
+    private func configPasswordLabelConstraints(){
+        passwordLabel.snp.makeConstraints { make in
+            make.top.equalTo(emailTextField.snp.bottom).offset(15)
+            make.leading.equalTo(loginLabel.snp.leading)
+        }
+    }
+    
+    private func configPasswordTextFieldConstraints(){
+        passwordTextField.snp.makeConstraints { make in
+            make.top.equalTo(passwordLabel.snp.bottom).offset(15)
+            make.leading.equalTo(emailTextField.snp.leading)
+            make.trailing.equalTo(emailTextField.snp.trailing)
+            make.height.equalTo(emailTextField.snp.height)
+        }
+    }
+    
+    private func configForgotPasswordButtonConstraints(){
+        forgotPasswordButton.snp.makeConstraints { make in
+            make.top.equalTo(passwordTextField.snp.bottom).offset(15)
+            make.trailing.equalToSuperview().inset(40)
+        }
+    }
+    
+    private func configLoginButtonConstraints(){
+        loginButton.snp.makeConstraints { make in
+            make.top.equalTo(forgotPasswordButton.snp.bottom).offset(70)
+            make.leading.equalToSuperview().offset(35)
+            make.trailing.equalToSuperview().inset(35)
+            make.height.equalTo(50)
+        }
+    }
+    
+    private func configRegisterButtonConstraints(){
+        registerButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.centerX.equalToSuperview()
+        }
+    }
+    
     
     @objc private func loginTapped() {
         print("Primeiro Fluxo: LoginViewController")
 
-        guard let username = loginTextField.text,
+        guard let username = emailTextField.text,
               let password = passwordTextField.text else { return }
         
         interactor?.callService(username: username, password: password)
-        
-        
     }
     
     @objc private func forgotPasswordTapped() {
@@ -170,3 +207,28 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay, UITextF
     
 }
 
+
+import SwiftUI
+
+// Preview para visualizar o LoginViewController
+struct PreviewController_Previews: PreviewProvider {
+    static var previews: some View {
+        PreviewViewControllerRepresentable()
+            .edgesIgnoringSafeArea(.all)
+    }
+}
+
+// UIViewControllerRepresentable para integrar UIKit ao SwiftUI
+struct PreviewViewControllerRepresentable: UIViewControllerRepresentable {
+    
+    func makeUIViewController(context: Context) -> UINavigationController {
+        // Cria o LoginViewController e o coloca dentro de um UINavigationController
+        let previewVC = LoginViewController()
+        let navigationController = UINavigationController(rootViewController: previewVC)
+        return navigationController
+    }
+    
+    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
+        // Atualizações podem ser feitas aqui, mas pode ser deixado vazio
+    }
+}
