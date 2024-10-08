@@ -5,8 +5,8 @@
 //  Created by Franklin  Stilhano Solano on 03/10/24.
 //
 
-import UIKit
 import Modulo_DesignerSystem
+import SnapKit
 
 protocol RegisterViewControllerDisplay: AnyObject {
     func showAlert(title: String, message: String)
@@ -86,41 +86,74 @@ class RegisterViewController: UIViewController, RegisterViewControllerDisplay, U
     }
     
     private func configConstraints(){
-        NSLayoutConstraint.activate([
-            
-            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            
-            logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 45),
-            logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoImage.heightAnchor.constraint(equalToConstant: 80),
-            logoImage.widthAnchor.constraint(equalToConstant: 80),
-            
-            nameTextField.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 70),
-            nameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20),
-            nameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            nameTextField.heightAnchor.constraint(equalToConstant: 50),
-            
-            emailTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15),
-            emailTextField.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
-            emailTextField.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
-            emailTextField.heightAnchor.constraint(equalToConstant: 50),
-            
-            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 15),
-            passwordTextField.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
-            passwordTextField.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
-            passwordTextField.heightAnchor.constraint(equalToConstant: 50),
-            
-            confirmedPasswordTextField.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 15),
-            confirmedPasswordTextField.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
-            confirmedPasswordTextField.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
-            confirmedPasswordTextField.heightAnchor.constraint(equalToConstant: 50),
-            
-            registerButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -40),
-            registerButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 30),
-            registerButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            registerButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
+        configBackButtonConstraints()
+        configLogoImageConstraints()
+        configNameTextFieldConstraints()
+        configEmailTextFieldConstraints()
+        configPasswordTextFieldConstraints()
+        configConfirmedPasswordTextFieldConstraints()
+        configButtonRegisterConstraints()
+    }
+    
+    private func configBackButtonConstraints(){
+        backButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.equalToSuperview().offset(25)
+        }
+    }
+    
+    private func configLogoImageConstraints(){
+        logoImage.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(45)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(80)
+            make.width.equalTo(80)
+        }
+    }
+    
+    private func configNameTextFieldConstraints(){
+        nameTextField.snp.makeConstraints { make in
+            make.top.equalTo(logoImage.snp.bottom).offset(70)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(50)
+        }
+    }
+    
+    private func configEmailTextFieldConstraints(){
+        emailTextField.snp.makeConstraints { make in
+            make.top.equalTo(nameTextField.snp.bottom).offset(15)
+            make.leading.equalTo(nameTextField.snp.leading)
+            make.trailing.equalTo(nameTextField.snp.trailing)
+            make.height.equalTo(nameTextField.snp.height)
+        }
+    }
+    
+    private func configPasswordTextFieldConstraints(){
+        passwordTextField.snp.makeConstraints { make in
+            make.top.equalTo(emailTextField.snp.bottom).offset(15)
+            make.leading.equalTo(nameTextField.snp.leading)
+            make.trailing.equalTo(nameTextField.snp.trailing)
+            make.height.equalTo(nameTextField.snp.height)
+        }
+    }
+    
+    private func configConfirmedPasswordTextFieldConstraints(){
+        confirmedPasswordTextField.snp.makeConstraints { make in
+            make.top.equalTo(passwordTextField.snp.bottom).offset(15)
+            make.leading.equalTo(nameTextField.snp.leading)
+            make.trailing.equalTo(nameTextField.snp.trailing)
+            make.height.equalTo(nameTextField.snp.height)
+        }
+    }
+    
+    private func configButtonRegisterConstraints(){
+        registerButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(40)
+            make.leading.equalToSuperview().offset(35)
+            make.trailing.equalToSuperview().inset(35)
+            make.height.equalTo(50)
+        }
     }
     
     @objc private func backTapped() {
@@ -150,3 +183,28 @@ class RegisterViewController: UIViewController, RegisterViewControllerDisplay, U
 }
 
 
+
+import SwiftUI
+
+// Preview para visualizar o LoginViewController
+struct PreviewController_Previews1: PreviewProvider {
+    static var previews: some View {
+        PreviewViewControllerRepresentable1()
+            .edgesIgnoringSafeArea(.all)
+    }
+}
+
+// UIViewControllerRepresentable para integrar UIKit ao SwiftUI
+struct PreviewViewControllerRepresentable1: UIViewControllerRepresentable {
+    
+    func makeUIViewController(context: Context) -> UINavigationController {
+        // Cria o LoginViewController e o coloca dentro de um UINavigationController
+        let previewVC = RegisterViewController()
+        let navigationController = UINavigationController(rootViewController: previewVC)
+        return navigationController
+    }
+    
+    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
+        // Atualizações podem ser feitas aqui, mas pode ser deixado vazio
+    }
+}
