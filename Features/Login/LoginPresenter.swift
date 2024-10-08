@@ -24,7 +24,7 @@ class LoginPresenter: LoginPresenting {
         self.coordinator = coordinator
     }
     
-    func presentLoginResult(success: Bool) {
+    func   presentLoginResult(success: Bool) {
         if success {
             view?.showAlert(title: "Deu certo", message: "Usuario logado com sucesso")
             print("Terceiro Fluxo: LoginPresenter")

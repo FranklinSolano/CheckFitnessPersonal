@@ -12,7 +12,7 @@ protocol RegisterViewControllerDisplay: AnyObject {
     func showAlert(title: String, message: String)
 }
 
-class RegisterViewController: UIViewController, RegisterViewControllerDisplay {
+class RegisterViewController: UIViewController, RegisterViewControllerDisplay, UITextFieldDelegate {
     
     lazy var backButton: UIButton = {
         let button = CustomButton(title: "Voltar", fontSize: 14)
@@ -66,13 +66,13 @@ class RegisterViewController: UIViewController, RegisterViewControllerDisplay {
         self.navigationItem.hidesBackButton = true
     }
     
-
+    
     
     private func configSetup(){
         view.backgroundColor = DesignerSystem.Colors.primaryColor
         configElements()
         configConstraints()
-      
+        hideKeyboardWhenTappedAround()
     }
     
     private func configElements(){
@@ -91,7 +91,7 @@ class RegisterViewController: UIViewController, RegisterViewControllerDisplay {
             backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
             
-            logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 15),
+            logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 45),
             logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logoImage.heightAnchor.constraint(equalToConstant: 80),
             logoImage.widthAnchor.constraint(equalToConstant: 80),
@@ -126,7 +126,7 @@ class RegisterViewController: UIViewController, RegisterViewControllerDisplay {
     @objc private func backTapped() {
         interactor?.navigateToLogin()
     }
-
+    
     @objc private func registerTapped() {
         guard let username = nameTextField.text,
               let email = emailTextField.text,
@@ -135,7 +135,7 @@ class RegisterViewController: UIViewController, RegisterViewControllerDisplay {
         interactor?.callService(username: username, email: email, password: password, confirmPassword: confirmPassword)
     }
     
-  
+    
     
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title,
@@ -149,9 +149,4 @@ class RegisterViewController: UIViewController, RegisterViewControllerDisplay {
     
 }
 
-extension RegisterViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-}
+

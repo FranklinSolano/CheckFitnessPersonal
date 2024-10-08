@@ -13,16 +13,8 @@ protocol LoginViewControllerDisplay: AnyObject {
     
 }
 
-class LoginViewController: UIViewController, LoginViewControllerDisplay, TextFieldConfigurable {
-    
-    
-    func configureTextField() {
-        loginTextField.configureTextField(delegate: self, isSecure: false, keyboardType: .emailAddress, autocapitalization: .none, placeholderColor: .darkGray)
-        passwordTextField.configureTextField(delegate: self, isSecure: true, keyboardType: .default, autocapitalization: .none, placeholderColor: .darkGray)
-    }
-    
+class LoginViewController: UIViewController, LoginViewControllerDisplay, UITextFieldDelegate {
 
-    
     
     lazy var logoCheckFitnee: UIView = {
         let view = CustomLogo()
@@ -38,7 +30,7 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay, TextFie
     
     lazy var loginTextField: UITextField = {
         let textfield = CustomTextField(placeholder: "Digite seu email", image: UIImage(systemName: "person")!)
-//        textfield.configureTextField(delegate: self, isSecure: false, keyboardType: .emailAddress, autocapitalization: .none, placeholderColor: .darkGray)
+        textfield.configureTextField(delegate: self, isSecure: false, keyboardType: .emailAddress, autocapitalization: .none, placeholderColor: .darkGray)
         return textfield
     }()
     
@@ -50,7 +42,7 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay, TextFie
     
     lazy var passwordTextField: UITextField = {
         let textfield = CustomTextField(placeholder: "Digite sua senha", image: UIImage(systemName: "lock")!)
-//        textfield.configureTextField(delegate: self, isSecure: true, keyboardType: .default, autocapitalization: .none, placeholderColor: .darkGray)
+        textfield.configureTextField(delegate: self, isSecure: true, keyboardType: .default, autocapitalization: .none, placeholderColor: .darkGray)
         return textfield
     }()
     
@@ -90,7 +82,7 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay, TextFie
         view.backgroundColor = DesignerSystem.Colors.primaryColor
         configElements()
         configConstraints()
-        configureTextField()
+        hideKeyboardWhenTappedAround()
     }
     
     private func configElements(){

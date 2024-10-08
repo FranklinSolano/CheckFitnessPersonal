@@ -14,7 +14,7 @@ protocol ForgotPasswordViewControllerDisplay: AnyObject {
 }
 
 
-class ForgotPasswordViewController: UIViewController, ForgotPasswordViewControllerDisplay {
+class ForgotPasswordViewController: UIViewController, ForgotPasswordViewControllerDisplay, UITextFieldDelegate {
 
     
     
@@ -59,6 +59,7 @@ class ForgotPasswordViewController: UIViewController, ForgotPasswordViewControll
         view.backgroundColor = DesignerSystem.Colors.primaryColor
         configElement()
         configConstraints()
+        hideKeyboardWhenTappedAround()
     }
     
     private func configElement() {
@@ -118,9 +119,3 @@ class ForgotPasswordViewController: UIViewController, ForgotPasswordViewControll
     }
 }
 
-extension ForgotPasswordViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-}

@@ -6,19 +6,27 @@
 //
 
 import UIKit
-import Modulo_DesignerSystem
 
-protocol TextFieldConfigurable: AnyObject, UITextFieldDelegate {
-     func configureTextField()
-}
 
-extension TextFieldConfigurable where Self: UIViewController {
-    func configureTextField() {
-        // A implementação padrão pode ser deixada vazia
-    }
-    
-     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+extension UIViewController {
+    @objc func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder() // Esconde o teclado
         return true
     }
 }
+
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+       
+    }
+
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
+
