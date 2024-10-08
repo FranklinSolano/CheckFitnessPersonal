@@ -12,6 +12,9 @@ protocol LoginServicing: AnyObject {
 }
 
 class LoginService: LoginServicing {
+    
+    //MARK: - Protocol-Method
+    
     func submitLogin(username: String, password: String, completion: @escaping (Bool) -> Void) {
         // Simulação de chamada de rede. Aqui você pode integrar com APIs reais.
         DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
@@ -20,6 +23,4 @@ class LoginService: LoginServicing {
             completion(success)
         }
     }
-    
-    
 }

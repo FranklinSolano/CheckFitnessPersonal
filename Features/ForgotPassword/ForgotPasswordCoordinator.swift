@@ -14,12 +14,14 @@ protocol ForgotPasswordCoordinating: AnyObject {
 
 class ForgotPasswordCoordinator: ForgotPasswordCoordinating {
     
+    //MARK: - Variables
+    
     weak var navegationController: UINavigationController?
     var presenter: ForgotPasswordPresenter?
     
+    //MARK: - Protocol-Method
+    
     func navegateToForgotPassword() {
-        navegationController?.popViewController(animated: true)
+        navegationController?.popViewController(animated: true) // Quarto FLuxo: RegisterCoordinator
     }
-    
-    
 }

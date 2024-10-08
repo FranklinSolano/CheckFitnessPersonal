@@ -16,6 +16,7 @@ protocol LoginInteracting: AnyObject {
 
 class LoginInteractor: LoginInteracting {
     
+    //MARK: - Init
     
     weak var presenter: LoginPresenting?
     var service: LoginServicing?
@@ -25,25 +26,21 @@ class LoginInteractor: LoginInteracting {
         self.service = service
     }
     
+    //MARK: - Protocol-Method
     
     func callService(username: String, password: String) {
         service?.submitLogin(username: username, password: password, completion: { [weak self] success in
             DispatchQueue.main.async {
-                print("Segundo Fluxo: LoginInteractor") // Debugging
-                self?.presenter?.presentLoginResult(success: success)
+                self?.presenter?.presentLoginResult(success: success)  // Segundo Fluxo: LoginInteractor
             }
         })
     }
     
     func navigateToRegister() {
-        print("Segundo Fluxo: LoginInteractor") // Debugging
-        presenter?.presentNavigationToRegister()
+        presenter?.presentNavigationToRegister()  // Segundo Fluxo: LoginInteractor
     }
     
     func navigateToForgotPassword() {
-        print("Segundo Fluxo: LoginInteractor") // Debugging
-        presenter?.presentNavigationToForgotPassword()
+        presenter?.presentNavigationToForgotPassword()  // Segundo Fluxo: LoginInteractor
     }
-
-    
 }

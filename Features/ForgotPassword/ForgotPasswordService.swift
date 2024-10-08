@@ -13,6 +13,9 @@ protocol ForgotPasswordServicing: AnyObject {
 }
 
 class ForgotPasswordService: ForgotPasswordServicing {
+    
+    //MARK: - Protocol-Method
+    
     func submitForgotPassword(email: String, completion: @escaping (Bool) -> Void) {
         DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
             let success = !email.isEmpty

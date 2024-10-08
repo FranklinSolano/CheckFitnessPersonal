@@ -15,7 +15,7 @@ protocol ForgotPasswordViewControllerDisplay: AnyObject {
 
 class ForgotPasswordViewController: UIViewController, ForgotPasswordViewControllerDisplay, UITextFieldDelegate {
 
-    
+    //MARK: - Elements
     
     lazy var backButton: UIButton = {
         let button = CustomButton(title: "Voltar", fontSize: 14)
@@ -48,20 +48,24 @@ class ForgotPasswordViewController: UIViewController, ForgotPasswordViewControll
     }()
     
     var interactor: ForgotPasswordInteracting?
+    
+    //MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configSetup()
     }
     
-    private func configSetup() {
+    //MARK: - Settigns-Sreen
+    
+    private func configSetup() { // configurar toda view
         view.backgroundColor = DesignerSystem.Colors.primaryColor
         configElement()
         configConstraints()
         hideKeyboardWhenTappedAround()
     }
     
-    private func configElement() {
+    private func configElement() { // adicionar todos elementos na tela
         view.addSubview(backButton)
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
@@ -69,7 +73,7 @@ class ForgotPasswordViewController: UIViewController, ForgotPasswordViewControll
         view.addSubview(enterButton)
     }
 
-    private func configConstraints() {
+    private func configConstraints() { // configurar todas constraints dos elementos
         configBackButtonConstraints()
         configTitleLabelConstraints()
         configSubTitleConstraints()
@@ -117,16 +121,18 @@ class ForgotPasswordViewController: UIViewController, ForgotPasswordViewControll
         }
     }
     
+    //MARK: - Actions-Button
+    
     @objc private func backTapped() {
-        interactor?.navegationToLogin()
+        interactor?.navegationToLogin() // Primeiro Fluxo: ForgotPasswordViewController
     }
     
     @objc private func toEnterTapped() {
-        
         guard let email = emailTextField.text else { return }
-        
-        interactor?.callService(email: email)
+        interactor?.callService(email: email) // Primeiro Fluxo: ForgotPasswordViewController
     }
+    
+    //MARK: - Protocol-Method
     
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title,

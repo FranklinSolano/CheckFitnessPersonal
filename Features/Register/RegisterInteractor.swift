@@ -16,6 +16,8 @@ protocol RegisterInteracting: AnyObject {
 
 class RegisterInteractor: RegisterInteracting {
     
+    //MARK: - Init
+    
     weak var presenter: RegisterPreserting?
     var service: RegisterServicing?
     
@@ -24,24 +26,22 @@ class RegisterInteractor: RegisterInteracting {
         self.service = service
     }
     
+    //MARK: - Protocol-Method
+    
     func callService(username: String, email: String, password: String, confirmPassword: String) {
         service?.submitRegister(username: username, email: email, passwrod: password, confirmedPassword: confirmPassword, completion: { [weak self] success in
             DispatchQueue.main.async {
-                
-                self?.presenter?.presenterResultRegister(success: success)
+                self?.presenter?.presenterResultRegister(success: success) //Segundo Fluxo: RegisterInteractor
             }
         })
     }
     
-    
     func navigateToLogin() {
-        self.presenter?.presenterNavigationToLogin()
+        self.presenter?.presenterNavigationToLogin()  //Segundo Fluxo: RegisterInteractor
     }
     
     func navigateTohome() {
-        self.presenter?.presenterNavigationToHome()
+        self.presenter?.presenterNavigationToHome() //Segundo Fluxo: RegisterInteractor
     }
-    
-    
 }
 

@@ -14,6 +14,8 @@ protocol RegisterViewControllerDisplay: AnyObject {
 
 class RegisterViewController: UIViewController, RegisterViewControllerDisplay, UITextFieldDelegate {
     
+    //MARK: - Elements
+    
     lazy var backButton: UIButton = {
         let button = CustomButton(title: "Voltar", fontSize: 14)
         button.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
@@ -38,13 +40,11 @@ class RegisterViewController: UIViewController, RegisterViewControllerDisplay, U
         return textField
     }()
     
-    
     lazy var passwordTextField: UITextField = {
         let textField = CustomTextField(placeholder: "Senha", image: UIImage(systemName: "lock")!)
         textField.configureTextField(delegate: self, isSecure: true, keyboardType: .default, autocapitalization: .none, placeholderColor: .darkGray)
         return textField
     }()
-    
     
     lazy var confirmedPasswordTextField: UITextField = {
         let textField = CustomTextField(placeholder: "Confirmar Senha", image: UIImage(systemName: "lock")!)
@@ -60,22 +60,23 @@ class RegisterViewController: UIViewController, RegisterViewControllerDisplay, U
     
     var interactor: RegisterInteracting?
     
+    //MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configSetup()
-        self.navigationItem.hidesBackButton = true
     }
     
+    //MARK: - Settigns-Sreen
     
-    
-    private func configSetup(){
+    private func configSetup(){   // configurar toda view
         view.backgroundColor = DesignerSystem.Colors.primaryColor
         configElements()
         configConstraints()
         hideKeyboardWhenTappedAround()
     }
     
-    private func configElements(){
+    private func configElements(){     // adicionar todos elementos na tela
         view.addSubview(backButton)
         view.addSubview(logoImage)
         view.addSubview(nameTextField)
@@ -85,7 +86,7 @@ class RegisterViewController: UIViewController, RegisterViewControllerDisplay, U
         view.addSubview(registerButton)
     }
     
-    private func configConstraints(){
+    private func configConstraints(){     // configurar todas constraints dos elementos
         configBackButtonConstraints()
         configLogoImageConstraints()
         configNameTextFieldConstraints()
@@ -156,8 +157,10 @@ class RegisterViewController: UIViewController, RegisterViewControllerDisplay, U
         }
     }
     
+    //MARK: - Actions-Button
+    
     @objc private func backTapped() {
-        interactor?.navigateToLogin()
+        interactor?.navigateToLogin()    //Primeiro Fluxo: RegisterViewController
     }
     
     @objc private func registerTapped() {
@@ -165,8 +168,10 @@ class RegisterViewController: UIViewController, RegisterViewControllerDisplay, U
               let email = emailTextField.text,
               let password = passwordTextField.text,
               let confirmPassword = confirmedPasswordTextField.text else { return }
-        interactor?.callService(username: username, email: email, password: password, confirmPassword: confirmPassword)
+        interactor?.callService(username: username, email: email, password: password, confirmPassword: confirmPassword)   //Primeiro Fluxo: RegisterViewController
     }
+    
+    //MARK: - Protocol-Method
     
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title,

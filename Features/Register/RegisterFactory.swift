@@ -21,7 +21,6 @@ class RegisterFactory {
         let service = RegisterService()
         let interactor = RegisterInteractor(presenter: presenter, service: service)
         registerVC.interactor = interactor
-        
         return registerVC
     }
 }

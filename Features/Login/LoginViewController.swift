@@ -15,6 +15,7 @@ protocol LoginViewControllerDisplay: AnyObject {
 
 class LoginViewController: UIViewController, LoginViewControllerDisplay, UITextFieldDelegate {
 
+    //MARK: - Elements
     
     lazy var logoCheckFitnee: UIView = {
         let view = CustomLogo()
@@ -66,6 +67,8 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay, UITextF
     
     var interactor: LoginInteracting?
     
+    //MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configSetup()
@@ -73,19 +76,23 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay, UITextF
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Esconde a Navigation Bar
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        configNavegationBar(animated: animated)
     }
     
-    private func configSetup(){
-        
+    //MARK: - Settigns-Sreen
+    
+    private func configNavegationBar(animated: Bool){
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)   // Esconde a Navigation Bar
+    }
+    
+    private func configSetup(){  // configurar toda view
         view.backgroundColor = DesignerSystem.Colors.primaryColor
         configElements()
         configConstraints()
         hideKeyboardWhenTappedAround()
     }
     
-    private func configElements(){
+    private func configElements(){ // adicionar todos elementos na tela
         view.addSubview(logoCheckFitnee)
         view.addSubview(loginLabel)
         view.addSubview(emailTextField)
@@ -96,7 +103,7 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay, UITextF
         view.addSubview(registerButton)
     }
     
-    private func configConstraints(){
+    private func configConstraints(){  // configurar todas constraints dos elementos
         configLogoImageConstraints()
         configLoginLabelConstraints()
         configEmailTextFieldConstraints()
@@ -171,28 +178,23 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay, UITextF
         }
     }
     
+    //MARK: - Actions-Button
     
     @objc private func loginTapped() {
-        print("Primeiro Fluxo: LoginViewController")
-
         guard let username = emailTextField.text,
               let password = passwordTextField.text else { return }
-        
-        interactor?.callService(username: username, password: password)
+        interactor?.callService(username: username, password: password) // Primeiro Fluxo: LoginViewController
     }
     
     @objc private func forgotPasswordTapped() {
-        print("Primeiro Fluxo: LoginViewController")
-
-        interactor?.navigateToForgotPassword()    }
-    
-    @objc private func registerTapped() {
-        print("Primeiro Fluxo: LoginViewController")
-
-        interactor?.navigateToRegister()
+        interactor?.navigateToForgotPassword() // Primeiro Fluxo: LoginViewController
     }
     
+    @objc private func registerTapped() {
+        interactor?.navigateToRegister()    // Primeiro Fluxo: LoginViewController
+    }
     
+    //MARK: - Protocol-Method
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title,
                                       message: message,

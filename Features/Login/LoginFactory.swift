@@ -18,11 +18,8 @@ class LoginFactory {
         coordinator.presenter = presenter
         let service = LoginService()
         let interactor = LoginInteractor(presenter: presenter, service: service)
-        
         loginVC.interactor = interactor
-        
         return (loginVC, coordinator)
-        
     }
     
 }

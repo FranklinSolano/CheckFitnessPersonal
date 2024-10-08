@@ -15,27 +15,24 @@ protocol LoginCoordinating: AnyObject {
 
 class LoginCoordinator: LoginCoordinating {
     
+    //MARK: - Variables
+    
     weak var navigationController: UINavigationController?
     var presenter: LoginPresenter?
     
+    //MARK: - Protocol-Method
     
-    
-    func navigateToRegister() {
+    func navigateToRegister() {    // Quarto Fluxo: LoginCoordinator
         guard let navigationController else { return }
-        print("Quarto Fluxo: LoginCoordinator")
         let registerFactory = RegisterFactory()
         let registerVC = registerFactory.make(navegationController: navigationController)
         navigationController.pushViewController(registerVC, animated: true)
     }
     
-    func navigationToForgotPassword() {
-        
+    func navigationToForgotPassword() {      // Quarto Fluxo: LoginCoordinator
         guard let navigationController else { return }
-       
         let forgotPasswordFactory = ForgotPasswordFactory()
         let forgotPasswordVC = forgotPasswordFactory.make(navegationController: navigationController)
         navigationController.pushViewController(forgotPasswordVC, animated: true)
     }
-    
 }
-

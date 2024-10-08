@@ -15,17 +15,17 @@ protocol RegisterCoordinating: AnyObject {
 
 class RegisterCoordinator: RegisterCoordinating {
     
+    //MARK: - Variables
+    
     weak var navegationController: UINavigationController?
     var presenter: RegisterPresenter?
     
+    //MARK: - Protocol-Method
     
     func navigateToLogin() {
-        navegationController?.popViewController(animated: true)
+        navegationController?.popViewController(animated: true) // Quarto FLuxo: RegisterCoordinator
     }
         
-    func navigateToHome() {
-        
+    func navigateToHome() {  // Quarto FLuxo: RegisterCoordinator
     }
-    
-        
 }

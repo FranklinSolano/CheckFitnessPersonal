@@ -17,6 +17,7 @@ protocol RegisterPreserting: AnyObject {
 
 class RegisterPresenter: RegisterPreserting {
     
+    //MARK: - Init
     
     weak var view: RegisterViewControllerDisplay?
     var coordinator: RegisterCoordinating?
@@ -26,22 +27,21 @@ class RegisterPresenter: RegisterPreserting {
         self.coordinator = coordinator
     }
     
+    //MARK: - Protocol-Method
     
     func presenterResultRegister(success: Bool) {
         if success {
-            view?.showAlert(title: "Sucesso", message: "Cadastro feito com sucesso!")
-            coordinator?.navigateToLogin()
+            view?.showAlert(title: "Sucesso", message: "Cadastro feito com sucesso!") //Terceiro Fluxo: RegisterPresenter
         } else {
-            view?.showAlert(title: "Error", message: "Preencha todos os campos!")
+            view?.showAlert(title: "Error", message: "Preencha todos os campos!") //Terceiro Fluxo: RegisterPresenter
         }
     }
     
     func presenterNavigationToLogin() {
-        coordinator?.navigateToLogin()
+        coordinator?.navigateToLogin() //Terceiro Fluxo: RegisterPresenter
     }
     
     func presenterNavigationToHome() {
-        coordinator?.navigateToHome()
+        coordinator?.navigateToHome() //Terceiro Fluxo: RegisterPresenter
     }
-
 }

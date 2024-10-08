@@ -14,7 +14,8 @@ protocol ForgotPasswordInteracting: AnyObject {
 
 class ForgotPasswordInteractor: ForgotPasswordInteracting {
     
-
+    //MARK: - Init
+    
     weak var presenter: ForgotPasswordPresenting?
     var service: ForgotPasswordServicing?
     
@@ -23,18 +24,17 @@ class ForgotPasswordInteractor: ForgotPasswordInteracting {
         self.service = service
     }
     
+    //MARK: - Protocol-Method
     
     func callService(email: String) {
         service?.submitForgotPassword(email: email, completion: { [weak self] successs in
             DispatchQueue.main.async {
-                self?.presenter?.presenterForgotPasswordResult(success: successs)
+                self?.presenter?.presenterForgotPasswordResult(success: successs) //Segundo Fluxo: ForgotPasswordPresenter
             }
         })
     }
     
-    
     func navegationToLogin() {
-        presenter?.presentNavegationToLogin()
+        presenter?.presentNavegationToLogin() //Segundo Fluxo: ForgotPasswordPresenter
     }
-    
 }
